@@ -15,5 +15,6 @@
 
 - (void)addContact:(Contact *)newContact;
 - (void)printContactList;
+- (Contact *)findContactAtIndex:(NSInteger)index;
 
 @end

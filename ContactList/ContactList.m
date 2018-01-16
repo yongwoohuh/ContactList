@@ -27,8 +27,14 @@
 - (void)printContactList
 {
     for (Contact *contact in self.contacts) {
-        NSLog(@"#%lu: %@ <%@>", [self.contacts indexOfObject:contact],contact.fullName, contact.email);
+        NSLog(@"#%lu: <%@>", [self.contacts indexOfObject:contact],contact.fullName);
     }
+}
+
+- (Contact *)findContactAtIndex:(NSInteger)index
+{
+    Contact *foundContact = [self.contacts objectAtIndex:index];
+    return foundContact;
 }
 
 @end
