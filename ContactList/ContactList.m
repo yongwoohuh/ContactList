@@ -63,4 +63,14 @@
     }
 }
 
+- (BOOL)contactWithEmailExists:(NSString *)email
+{
+    for (Contact *c in self.contacts) {
+        if ([c.email isEqualToString:email]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end

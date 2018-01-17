@@ -18,5 +18,6 @@
 - (void)printDetailedContactList;
 - (Contact *)findContactAtIndex:(NSInteger)index;
 - (void)findContactWith:(NSString *)searchTerm;
+- (BOOL)contactWithEmailExists:(NSString *)email;
 
 @end

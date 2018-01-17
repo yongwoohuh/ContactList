@@ -26,25 +26,36 @@ int main(int argc, const char * argv[]) {
         [cL1 addContact:c2];
         [cL1 addContact:c3];
         [cL1 addContact:c4];
-        
-        while (YES) {
+        BOOL gameOn = YES;
+        while (gameOn) {
             NSString *userInput = [InputColloctor inputFromPrompt:@"What would you like do next? new - Create a new contact | list - List all contacts | quit - Exit Application | show #(index) - display details | find [term] - shows contact with [term]>"];
             
             if ([userInput isEqualToString:@"quit"]) {
                 NSLog(@"Thank you for using my app. Have a nice day 😀");
-                break;
-                
-            } else if ([userInput isEqualToString:@"new"]) {
-                NSString *fullName = [InputColloctor inputFromPrompt:
-                                      @"Please enter full name:"];
+                gameOn = NO;
+                continue;
+            }
+            
+            if ([userInput isEqualToString:@"new"]) {
                 NSString *email = [InputColloctor inputFromPrompt:
                                    @"Please enter email:"];
-                [cL1 addContact:[[Contact alloc] initWithFullName:fullName andEmail:email]];
-                
-            } else if ([userInput isEqualToString:@"list"]) {
+                if (![cL1 contactWithEmailExists:email]) {
+                    NSLog(@"contact already exists");
+                } else {
+                    NSString *fullName = [InputColloctor inputFromPrompt:
+                                          @"Please enter full name:"];
+                    
+                    [cL1 addContact:[[Contact alloc] initWithFullName:fullName andEmail:email]];
+                }
+                continue;
+            }
+            
+            if ([userInput isEqualToString:@"list"]) {
                 [cL1 printContactList];
-                
-            } else if ([userInput containsString:@"show"]) {
+                continue;
+            }
+            
+            if ([userInput containsString:@"show"]) {
                 NSArray *inputParse = [userInput componentsSeparatedByString:@" "];
                 if ([inputParse count] != 2) {
                     NSLog(@"Please input index with show command(ex]show 2)");
@@ -59,14 +70,17 @@ int main(int argc, const char * argv[]) {
                         NSLog(@"not found");
                     }
                 }
-                
-            } else if ([userInput containsString:@"find"]) {
+                continue;
+            }
+            
+            if ([userInput containsString:@"find"]) {
                 NSArray *inputParse = [userInput componentsSeparatedByString:@" "];
                 if ([inputParse count] == 2) {
                     [cL1 findContactWith:inputParse[1]];
                 } else {
                     NSLog(@"Invaild input");
                 }
+                continue;
             }
             
             
