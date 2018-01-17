@@ -31,10 +31,36 @@
     }
 }
 
+- (void)printDetailedContactList
+{
+    for (Contact *contact in self.contacts) {
+        NSLog(@"full name : %@", contact.fullName);
+        NSLog(@"email: %@", contact.email);
+        NSLog(@"");
+    }
+}
+
 - (Contact *)findContactAtIndex:(NSInteger)index
 {
     Contact *foundContact = [self.contacts objectAtIndex:index];
     return foundContact;
+}
+
+- (void)findContactWith:(NSString *)searchTerm
+{
+    ContactList *matchingContacts = [[ContactList alloc] init];
+    for (Contact *c in self.contacts) {
+        if ([c.fullName containsString:searchTerm]) {
+            [matchingContacts addContact:c];
+        } else if ([c.email containsString:searchTerm]) {
+            [matchingContacts addContact:c];
+        }
+    }
+    [matchingContacts printDetailedContactList];
+    
+    if (![matchingContacts.contacts count]) {
+        NSLog(@"No contacts containing [%@] found",searchTerm);
+    }
 }
 
 @end

@@ -1,4 +1,4 @@
-//
+ //
 //  ContactList.h
 //  ContactList
 //
@@ -15,6 +15,8 @@
 
 - (void)addContact:(Contact *)newContact;
 - (void)printContactList;
+- (void)printDetailedContactList;
 - (Contact *)findContactAtIndex:(NSInteger)index;
+- (void)findContactWith:(NSString *)searchTerm;
 
 @end

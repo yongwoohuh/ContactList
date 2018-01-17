@@ -20,13 +20,15 @@ int main(int argc, const char * argv[]) {
         Contact *c1 = [[Contact alloc] initWithFullName:@"Paul" andEmail:@"paul.gmail.com"];
         Contact *c2 = [[Contact alloc] initWithFullName:@"Bri" andEmail:@"bri@bri.com"];
         Contact *c3 = [[Contact alloc] initWithFullName:@"Sam" andEmail:@"sam.yahoo.com"];
+        Contact *c4 = [[Contact alloc] initWithFullName:@"Haul" andEmail:@"haulsam.yahoo.com"];
         
         [cL1 addContact:c1];
         [cL1 addContact:c2];
         [cL1 addContact:c3];
+        [cL1 addContact:c4];
         
         while (YES) {
-            NSString *userInput = [InputColloctor inputFromPrompt:@"What would you like do next? new - Create a new contact | list - List all contacts | quit - Exit Application | show #(index) - display details >"];
+            NSString *userInput = [InputColloctor inputFromPrompt:@"What would you like do next? new - Create a new contact | list - List all contacts | quit - Exit Application | show #(index) - display details | find [term] - shows contact with [term]>"];
             
             if ([userInput isEqualToString:@"quit"]) {
                 NSLog(@"Thank you for using my app. Have a nice day 😀");
@@ -42,25 +44,33 @@ int main(int argc, const char * argv[]) {
             } else if ([userInput isEqualToString:@"list"]) {
                 [cL1 printContactList];
                 
-            }
-            else if ([userInput containsString:@"show"]) {
+            } else if ([userInput containsString:@"show"]) {
                 NSArray *inputParse = [userInput componentsSeparatedByString:@" "];
                 if ([inputParse count] != 2) {
                     NSLog(@"Please input index with show command(ex]show 2)");
                 } else {
                     NSInteger index = [inputParse[1] integerValue];
                     if (index <= [cL1.contacts count] - 1) {
-                    Contact *contact = [cL1 findContactAtIndex:index];
-                    
-                    NSLog(@"full name: %@", contact.fullName);
-                    NSLog(@"email: %@", contact.email);
+                        Contact *contact = [cL1 findContactAtIndex:index];
+                        
+                        NSLog(@"full name: %@", contact.fullName);
+                        NSLog(@"email: %@", contact.email);
                     } else {
                         NSLog(@"not found");
                     }
-
+                }
+                
+            } else if ([userInput containsString:@"find"]) {
+                NSArray *inputParse = [userInput componentsSeparatedByString:@" "];
+                if ([inputParse count] == 2) {
+                    [cL1 findContactWith:inputParse[1]];
+                } else {
+                    NSLog(@"Invaild input");
                 }
             }
-        }
+            
+            
+        }   // end of while loop
     }
     return 0;
 }
